@@ -21,44 +21,30 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial check when the page is loaded
   handleScroll();
 });
-// Fungsi untuk menambahkan komentar ke daftar komentar
+
+// Fungsi untuk menambahkan komentar ke LocalStorage
 function addComment() {
-  // Mengambil nilai dari input nama dan komentar
   var name = document.getElementById("name").value;
   var comment = document.getElementById("comment").value;
 
-  // Membuat objek komentar
-  var commentObj = {
-    name: name,
-    comment: comment,
-  };
-
-  // Mengecek apakah sudah ada komentar sebelumnya di localStorage
   var comments = JSON.parse(localStorage.getItem("comments")) || [];
+  comments.push({ name: name, comment: comment });
 
-  // Menambahkan komentar baru ke daftar komentar
-  comments.push(commentObj);
-
-  // Menyimpan daftar komentar ke localStorage
   localStorage.setItem("comments", JSON.stringify(comments));
 
-  // Memperbarui tampilan daftar komentar
   updateCommentList();
 
-  // Membersihkan input setelah komentar dikirim
   document.getElementById("name").value = "";
   document.getElementById("comment").value = "";
 }
 
-// Fungsi untuk memperbarui tampilan daftar komentar dari localStorage
+// Fungsi untuk memperbarui tampilan daftar komentar dari LocalStorage
 function updateCommentList() {
   var commentListElement = document.getElementById("commentList");
-  commentListElement.innerHTML = ""; // Mengosongkan daftar komentar sebelum memperbarui
+  commentListElement.innerHTML = "";
 
-  // Mendapatkan daftar komentar dari localStorage
   var comments = JSON.parse(localStorage.getItem("comments")) || [];
 
-  // Menambahkan komentar ke daftar komentar di HTML
   comments.forEach(function (commentObj) {
     var commentElement = document.createElement("div");
     commentElement.className = "card mt-2";
